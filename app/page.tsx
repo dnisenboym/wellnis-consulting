@@ -1,6 +1,14 @@
 'use client';
 
+import { useState } from 'react';
+
 export default function Page() {
+  // 👉 ВСТАВЬТЕ сюда ваш адрес из Formspree (пример: "https://formspree.io/f/abcdwxyz")
+  const FORMSPREE_ENDPOINT = "https://formspree.io/f/abcdwxyz";
+
+  const [status, setStatus] = useState<"idle"|"loading"|"sent"|"error">("idle");
+  const [errorMsg, setErrorMsg] = useState<string>("");
+
   const services = [
     { title: "Consulting for Clinics & Founders", desc: "End-to-end help selecting devices and designing safe, effective wellness programs (SOPs, consents, staff training, KPIs)." },
     { title: "1:1 Coaching for Individuals", desc: "Personalized guidance on lifestyle, sleep, nutrition, training, and supplement strategies with clear weekly actions." },
@@ -24,12 +32,46 @@ export default function Page() {
     { q: "Do you implement on site?", a: "Yes. For clinics I build SOPs, train staff, and help vet vendors/devices. For individuals we set metrics and weekly actions." },
   ];
 
-  // Локальные картинки из /public
+  // Локальные картинки из /public (загрузите туда эти файлы!)
   const gallery = [
     { src: "/fitness.jpg", alt: "Active recovery / athlete" },
     { src: "/meditation.jpg", alt: "Calm breath / meditation" },
     { src: "/iv-drip.jpg", alt: "IV therapy / vitamins & peptides" },
   ];
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setStatus("loading");
+    setErrorMsg("");
+
+    const form = e.currentTarget;
+    const data = {
+      name: (form.elements.namedItem('name') as HTMLInputElement)?.value ?? "",
+      email: (form.elements.namedItem('email') as HTMLInputElement)?.value ?? "",
+      message: (form.elements.namedItem('message') as HTMLTextAreaElement)?.value ?? "",
+      _subject: "New inquiry from wellness-consulting site",
+    };
+
+    try {
+      const res = await fetch(FORMSPREE_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      if (res.ok) {
+        setStatus("sent");
+        form.reset();
+      } else {
+        const txt = await res.text();
+        setErrorMsg(txt || "Submission failed.");
+        setStatus("error");
+      }
+    } catch (err: any) {
+      setErrorMsg(err?.message || "Network error.");
+      setStatus("error");
+    }
+  }
 
   return (
     <main className="min-h-screen w-full bg-gradient-to-b from-zinc-50 to-white text-zinc-900">
@@ -75,9 +117,7 @@ export default function Page() {
         <div className="mt-6 grid md:grid-cols-3 gap-4">
           {gallery.map(({ src, alt }) => (
             <figure key={src} className="relative rounded-2xl overflow-hidden border border-zinc-200" style={{ aspectRatio: '4 / 3' }}>
-              {/* Фото */}
               <img src={src} alt={alt} style={{ width:'100%', height:'100%', objectFit:'cover', display:'block' }} />
-              {/* Голубой тинт */}
               <div className="pointer-events-none absolute inset-0 bg-sky-200/20 mix-blend-multiply" />
               <figcaption className="sr-only">{alt}</figcaption>
             </figure>
@@ -139,12 +179,39 @@ export default function Page() {
       <section id="contact" className="mx-auto max-w-6xl px-4 py-16">
         <div className="rounded-2xl border border-zinc-200 bg-white p-8">
           <h2 className="text-2xl md:text-3xl font-semibold">Book a consult</h2>
-          <form className="mt-6 grid md:grid-cols-2 gap-4" onSubmit={(e)=>e.preventDefault()}>
-            <input className="rounded-xl border border-zinc-300 px-4 py-3 text-sm" placeholder="Name" />
-            <input className="rounded-xl border border-zinc-300 px-4 py-3 text-sm" placeholder="Email" type="email" />
-            <textarea className="rounded-xl border border-zinc-300 px-4 py-3 text-sm md:col-span-2" rows={5} placeholder="What do you want to improve?" />
-            <button className="rounded-2xl px-5 py-3 text-sm font-medium bg-emerald-600 text-white hover:opacity-90 md:w-max">Send</button>
-          </form>
+
+          {status === "sent" ? (
+            <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-6">
+              <p className="text-emerald-700 font-medium">Thanks! I’ll get back to you shortly.</p>
+              <p className="text-emerald-700 mt-1 text-sm">Your message has been received.</p>
+              <button
+                className="mt-4 rounded-2xl px-4 py-2 text-sm font-medium border border-emerald-300 hover:bg-emerald-100"
+                onClick={() => setStatus("idle")}
+              >
+                Send another message
+              </button>
+            </div>
+          ) : (
+            <>
+              {status === "error" && (
+                <div className="mb-4 rounded-2xl border border-red-200 bg-red-50 p-4 text-red-700 text-sm">
+                  Oops, something went wrong. {errorMsg || "Please try again."}
+                </div>
+              )}
+
+              <form className="grid md:grid-cols-2 gap-4" onSubmit={handleSubmit}>
+                <input name="name" className="rounded-xl border border-zinc-300 px-4 py-3 text-sm" placeholder="Name" required />
+                <input name="email" className="rounded-xl border border-zinc-300 px-4 py-3 text-sm" placeholder="Email" type="email" required />
+                <textarea name="message" className="rounded-xl border border-zinc-300 px-4 py-3 text-sm md:col-span-2" rows={5} placeholder="What do you want to improve?" required />
+                <button
+                  className="rounded-2xl px-5 py-3 text-sm font-medium bg-emerald-600 text-white hover:opacity-90 md:w-max disabled:opacity-60"
+                  disabled={status === "loading"}
+                >
+                  {status === "loading" ? "Sending…" : "Send"}
+                </button>
+              </form>
+            </>
+          )}
 
           {/* Quick contacts */}
           <div className="mt-6 flex flex-wrap gap-3">
