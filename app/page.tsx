@@ -1,7 +1,5 @@
 'use client';
 
-import Image from 'next/image';
-
 export default function Page() {
   const services = [
     { title: "Consulting for Clinics & Founders", desc: "End-to-end help selecting devices and designing safe, effective wellness programs (SOPs, consents, staff training, KPIs)." },
@@ -13,11 +11,11 @@ export default function Page() {
   ];
 
   const socials = [
-    { name: "Instagram", href: "https://instagram.com/", handle: "@wellness.consulting" },
+    { name: "Instagram", href: "https://instagram.com/heal_yourself_david", handle: "@heal_yourself_david" },
     { name: "Email", href: "mailto:d.nisenboym@gmail.com", handle: "d.nisenboym@gmail.com" },
     { name: "Phone", href: "tel:+13054505709", handle: "+1 (305) 450-5709" },
     { name: "WhatsApp", href: "https://wa.me/13054505709", handle: "Chat on WhatsApp" },
-    { name: "Telegram", href: "https://t.me/yourtelegramusername", handle: "@yourtelegramusername" },
+    { name: "Telegram", href: "https://t.me/wellnisconsult", handle: "@wellnisconsult" },
   ];
 
   const faqs = [
@@ -26,10 +24,11 @@ export default function Page() {
     { q: "Do you implement on site?", a: "Yes. For clinics I build SOPs, train staff, and help vet vendors/devices. For individuals we set metrics and weekly actions." },
   ];
 
+  // Прямые ссылки на фото (без оптимизатора Next)
   const gallery = [
-    "https://images.unsplash.com/photo-1587502536263-1d04e1b249d3?q=80&w=1200&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1588776814546-2e64d5f2b32e?q=80&w=1200&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1612158732275-34c829fcd6e3?q=80&w=1200&auto=format&fit=crop"
+    "https://images.unsplash.com/photo-1514846326716-8f6f9a19b8ae?q=80&w=1600&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=1600&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1511407397940-d57f68e81203?q=80&w=1600&auto=format&fit=crop",
   ];
 
   return (
@@ -68,14 +67,14 @@ export default function Page() {
         </div>
       </section>
 
-      {/* Gallery */}
+      {/* Gallery (plain <img>) */}
       <section className="mx-auto max-w-6xl px-4 py-12">
         <h2 className="text-2xl md:text-3xl font-semibold">Energy • Recovery • Longevity</h2>
         <p className="mt-2 text-zinc-600 max-w-2xl">Wellness in action — simple, practical, sustainable.</p>
         <div className="mt-6 grid md:grid-cols-3 gap-4">
           {gallery.map((src) => (
-            <div key={src} className="relative aspect-[4/3] rounded-2xl overflow-hidden border border-zinc-200">
-              <Image src={src} alt="Wellness visual" fill className="object-cover" unoptimized />
+            <div key={src} className="relative rounded-2xl overflow-hidden border border-zinc-200" style={{ aspectRatio: '4 / 3' }}>
+              <img src={src} alt="Wellness visual" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
             </div>
           ))}
         </div>
@@ -147,7 +146,7 @@ export default function Page() {
             <a href="tel:+13054505709" className="rounded-2xl px-4 py-2 text-sm font-medium border border-zinc-300 hover:bg-zinc-50">Call: +1 (305) 450-5709</a>
             <a href="mailto:d.nisenboym@gmail.com" className="rounded-2xl px-4 py-2 text-sm font-medium border border-zinc-300 hover:bg-zinc-50">Email: d.nisenboym@gmail.com</a>
             <a href="https://wa.me/13054505709" className="rounded-2xl px-4 py-2 text-sm font-medium border border-green-300 hover:bg-green-50">WhatsApp</a>
-            <a href="https://t.me/yourtelegramusername" className="rounded-2xl px-4 py-2 text-sm font-medium border border-sky-300 hover:bg-sky-50">Telegram</a>
+            <a href="https://t.me/wellnisconsult" className="rounded-2xl px-4 py-2 text-sm font-medium border border-sky-300 hover:bg-sky-50">Telegram</a>
           </div>
 
           <p className="mt-4 text-xs text-zinc-500">
@@ -161,8 +160,8 @@ export default function Page() {
         <div className="mx-auto max-w-6xl px-4 py-6 flex flex-col md:flex-row items-center justify-between gap-3 text-sm text-zinc-600">
           <p>© {new Date().getFullYear()} Wellness Consulting. All rights reserved.</p>
           <div className="flex gap-4">
-            <a href="#" className="hover:opacity-80">Privacy</a>
-            <a href="#" className="hover:opacity-80">Terms</a>
+            <a href="https://instagram.com/heal_yourself_david" className="hover:opacity-80">Instagram</a>
+            <a href="https://t.me/wellnisconsult" className="hover:opacity-80">Telegram</a>
           </div>
         </div>
       </footer>
