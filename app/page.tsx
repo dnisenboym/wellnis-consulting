@@ -75,7 +75,7 @@ export default function Page() {
         <div className="mt-6 grid md:grid-cols-3 gap-4">
           {gallery.map((src) => (
             <div key={src} className="relative aspect-[4/3] rounded-2xl overflow-hidden border border-zinc-200">
-              <Image src={src} alt="Wellness visual" fill className="object-cover" />
+              <Image src={src} alt="Wellness visual" fill className="object-cover" unoptimized />
             </div>
           ))}
         </div>
