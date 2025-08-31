@@ -149,8 +149,23 @@ export default function Page() {
             <a href="https://wa.me/13054505709" className="rounded-2xl px-4 py-2 text-sm font-medium border border-green-300 hover:bg-green-50">WhatsApp</a>
             <a href="https://t.me/yourtelegramusername" className="rounded-2xl px-4 py-2 text-sm font-medium border border-sky-300 hover:bg-sky-50">Telegram</a>
           </div>
+
+          <p className="mt-4 text-xs text-zinc-500">
+            Educational guidance only. Not medical advice. Consult your licensed clinician for diagnosis or treatment.
+          </p>
         </div>
       </section>
+
+      {/* Footer */}
+      <footer className="border-t border-zinc-200 bg-white">
+        <div className="mx-auto max-w-6xl px-4 py-6 flex flex-col md:flex-row items-center justify-between gap-3 text-sm text-zinc-600">
+          <p>© {new Date().getFullYear()} Wellness Consulting. All rights reserved.</p>
+          <div className="flex gap-4">
+            <a href="#" className="hover:opacity-80">Privacy</a>
+            <a href="#" className="hover:opacity-80">Terms</a>
+          </div>
+        </div>
+      </footer>
     </main>
   );
 }
