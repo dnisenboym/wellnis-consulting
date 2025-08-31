@@ -24,11 +24,11 @@ export default function Page() {
     { q: "Do you implement on site?", a: "Yes. For clinics I build SOPs, train staff, and help vet vendors/devices. For individuals we set metrics and weekly actions." },
   ];
 
-  // Прямые ссылки на фото (без оптимизатора Next)
+  // Локальные картинки из /public
   const gallery = [
-    "https://images.unsplash.com/photo-1514846326716-8f6f9a19b8ae?q=80&w=1600&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=1600&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1511407397940-d57f68e81203?q=80&w=1600&auto=format&fit=crop",
+    { src: "/fitness.jpg", alt: "Active recovery / athlete" },
+    { src: "/meditation.jpg", alt: "Calm breath / meditation" },
+    { src: "/iv-drip.jpg", alt: "IV therapy / vitamins & peptides" },
   ];
 
   return (
@@ -67,15 +67,20 @@ export default function Page() {
         </div>
       </section>
 
-      {/* Gallery (plain <img>) */}
+      {/* Gallery */}
       <section className="mx-auto max-w-6xl px-4 py-12">
         <h2 className="text-2xl md:text-3xl font-semibold">Energy • Recovery • Longevity</h2>
         <p className="mt-2 text-zinc-600 max-w-2xl">Wellness in action — simple, practical, sustainable.</p>
+
         <div className="mt-6 grid md:grid-cols-3 gap-4">
-          {gallery.map((src) => (
-            <div key={src} className="relative rounded-2xl overflow-hidden border border-zinc-200" style={{ aspectRatio: '4 / 3' }}>
-              <img src={src} alt="Wellness visual" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-            </div>
+          {gallery.map(({ src, alt }) => (
+            <figure key={src} className="relative rounded-2xl overflow-hidden border border-zinc-200" style={{ aspectRatio: '4 / 3' }}>
+              {/* Фото */}
+              <img src={src} alt={alt} style={{ width:'100%', height:'100%', objectFit:'cover', display:'block' }} />
+              {/* Голубой тинт */}
+              <div className="pointer-events-none absolute inset-0 bg-sky-200/20 mix-blend-multiply" />
+              <figcaption className="sr-only">{alt}</figcaption>
+            </figure>
           ))}
         </div>
       </section>
