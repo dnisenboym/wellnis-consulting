@@ -166,6 +166,46 @@ export default function Page() {
             Book a consult
           </a>
         </div>
+        <div className="max-w-6xl mx-auto px-4 py-12">
+  <h2 className="text-3xl font-bold text-center mb-8 text-blue-800">
+    Energy • Recovery • Longevity
+  </h2>
+  <p className="text-center text-gray-600 mb-12">
+    Positive, sustainable changes — the foundation of everything we do.
+  </p>
+
+  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+    {/* Running Man */}
+    <div className="relative w-full h-64">
+      <Image 
+        src="/running-man.jpg" 
+        alt="Running man" 
+        fill 
+        className="object-cover rounded-lg shadow-md" 
+      />
+    </div>
+
+    {/* IV Therapy */}
+    <div className="relative w-full h-64">
+      <Image 
+        src="/iv-therapy.jpg" 
+        alt="IV therapy wellness" 
+        fill 
+        className="object-cover rounded-lg shadow-md" 
+      />
+    </div>
+
+    {/* Healthy Food */}
+    <div className="relative w-full h-64">
+      <Image 
+        src="/healthy-food.jpg" 
+        alt="Healthy food and supplements" 
+        fill 
+        className="object-cover rounded-lg shadow-md" 
+      />
+    </div>
+  </div>
+</div>
       </header>
 
       {/* ===== Hero ===== */}
